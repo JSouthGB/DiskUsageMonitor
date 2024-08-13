@@ -1,0 +1,19 @@
+# One or more directories to monitor
+# They MUST be on the same physical disk
+Directories = [
+    "/path/to/a/directory/",
+    "/path/to/a/directory2",
+]
+
+# Minimum desired free space in GiB
+# A number larger than 0 is required
+# Integer only (no decimals)
+ThresholdLimit = 250
+
+# Gotify URL and token
+# Leave empty or remove if notifications should not be sent
+# Endpoint is added by the script
+GotifyURL = "https://gotify.example.com/"
+
+# Gotify token, more info: https://gotify.net/docs/pushmsg
+GotifyToken = "token12345"

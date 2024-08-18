@@ -14,11 +14,11 @@ sends notifications of deleted items.
     - gotify_url/gotify_token: The Gotify URL and token.
         - Not required.
 2. The directories and threshold_limit settings are required.
-3. The configuration file should be placed at ~/.config/disk_usage_monitor/disk_usage_monitor.toml.
-4. It should be named disk_usage_monitor.ini. The config file should be in TOML format.
-5. The log file will also be placed in ~/.config/disk_usage_monitor/.
+3. The configuration file should be placed at ~/.config/dum/dum.toml.
+4. It should be named dum.toml. The config file should be in TOML format.
+5. The log file will also be placed in ~/.config/dum/.
 
-### My reasoning:
+### Usage:
 The intent of this script is to prevent the disk containing the specified paths from becoming full as a lot of
 unattended actions occur that copy, move, or downloads files to the disk. The necessity of the subdirectories and
 files located in the specified paths has an expiration, that's why they are removed in chronological order,
@@ -26,12 +26,12 @@ oldest to newest.
 
 ### How it works:
 When the script runs, it will check if the free disk space is >= the specified threshold (desired minimum free space).
-If the free disk space is > the specified threshold, the script does nothing and exits. If the disk free space is <= to
+If the free disk space is > the specified threshold, the script does nothing and exits. If the free disk space is <= to
 the specified threshold, it will execute.
 
 Once executed, a list of files and subdirectories from the monitored directories will be created and deleted from
 oldest to newest based on 'last modified time' until the specified threshold is reached.
-(desired_free_space = existing_free_space + minimum_number_of_oldest_files).
+(desired_free_space = existing_free_space + minimum_number_of_oldest_files_and_directories).
  
  ### WARNING:
 USE WITH EXTREME CAUTION, THIS SCRIPT IS INTENDED TO DELETE FILES AND DIRECTORIES!

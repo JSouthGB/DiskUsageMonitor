@@ -1,5 +1,7 @@
 # One or more directories to monitor
 # They MUST be on the same physical disk
+# Each entry must be a full path, enclosed in double quotes and squared brackets
+# If multiple directories are specified, they must be separated by a comma
 Directories = [
     "/path/to/a/directory/",
     "/path/to/a/directory2",

@@ -5,17 +5,20 @@ from datetime import datetime
 from typing import List, Dict, Tuple
 
 from src.directory_handler import DirectoryHandler
+from src.config_loader import ConfigLoader
 
 
 class DiskAnalyzer:
     """Analyzes disk usage of files and subdirectories until specified threshold is reached."""
+    config_loader = ConfigLoader()
 
-    def __init__(self, dirs: List[str], threshold: int, label_mapping: Dict[str, str]) -> None:
-        self.dirs: list = dirs
-        self.mount_point: str = os.path.commonpath(dirs)
+    def __init__(self) -> None:
+        self.dirs: List[str] = self.config_loader.get_directories()
+        self.threshold_limit: int = self.config_loader.get_threshold_limit()
+        self.mount_point: str = os.path.commonpath(self.dirs)
         self.free_space: float = self.get_disk_free_space()
-        self.threshold: int = self.gib_to_bytes(threshold)
-        self.label_mapping: dict = label_mapping
+        self.threshold: int = self.gib_to_bytes(self.threshold_limit)
+        self.label_mapping: dict = self.get_labels()
 
     @staticmethod
     def gib_to_bytes(gib: int) -> int:
@@ -32,6 +35,18 @@ class DiskAnalyzer:
         Formula: Byte = GiB * 1024^3
         """
         return _bytes / (1024 ** 3)
+
+    def get_labels(self) -> Dict[str, str]:
+        """
+        Gets the labels of directories.
+        """
+        # labels are the lowest level directory names in monitored directories
+        # used for logging, easier to identify from where something is deleted
+        labels = [
+            os.path.basename(_.rstrip(os.sep)).capitalize()
+            for _ in self.dirs
+        ]
+        return dict(zip(self.dirs, labels))
 
     def get_disk_free_space(self) -> int:
         """
@@ -69,9 +84,9 @@ class DiskAnalyzer:
             return processed_items
 
         all_items: List[Dict[str, Tuple[str, int, float]]] = []
-        for dir_path in self.dirs:
-            handler = DirectoryHandler(dir_path)
-            all_items.extend(handler.gather_files_data())
+
+        handler = DirectoryHandler()
+        all_items.extend(handler.gather_files_data())
 
         sorted_items: List[Dict[str, Tuple[str, int, float]]] = sorted(all_items, key=lambda x: x['item'][2])
         total_size = 0

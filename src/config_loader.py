@@ -11,7 +11,7 @@ class ConfigLoader:
     def __init__(self) -> None:
         self.parsed_config: dict = {}
         self.load_config()
-        
+
     def load_config(self) -> None:
         config_file = os.path.join(config_path, "dum.toml")
         if not os.path.exists(config_file):

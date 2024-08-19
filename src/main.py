@@ -23,20 +23,10 @@ def main(dry_run: bool = False):
     try:
         config_loader = toml.load(config_file)
 
-        dirs = config_loader['Directories']
-        threshold_limit = config_loader['ThresholdLimit']
         gotify_url = config_loader['GotifyURL']
         gotify_token = config_loader['GotifyToken']
 
-        # labels are the lowest level directory names in monitored directories
-        # used for logging, easier to identify from where something is deleted
-        labels = [
-            os.path.basename(_.rstrip(os.sep)).capitalize()
-            for _ in dirs
-        ]
-        dir_labels = dict(zip(dirs, labels))
-
-        analyzer = DiskAnalyzer(dirs, threshold_limit, dir_labels)
+        analyzer = DiskAnalyzer()
     except (ValueError, FileNotFoundError) as err:
         logging.exception(f'An error occurred during configuration: {str(err)}', stack_info=True)
         return 1
@@ -53,7 +43,7 @@ def main(dry_run: bool = False):
             logging.info(f'Processing {processed_items_count} items.')
             analyzer.delete_files(processed_items)
             if gotify_url and gotify_token:
-                send_notification(processed_items, gotify_url, gotify_token)
+                send_notification(processed_items)
             else:
                 logging.info('Gotify not configured, no notification sent.')
             return 0

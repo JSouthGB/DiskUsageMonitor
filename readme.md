@@ -18,13 +18,13 @@ sends notifications of deleted items.
 4. It should be named dum.toml. The config file should be in TOML format.
 5. The log file will also be placed in ~/.config/dum/.
 
-### Usage:
+### Usage
 The intent of this script is to prevent the disk containing the specified paths from becoming full as a lot of
 unattended actions occur that copy, move, or downloads files to the disk. The necessity of the subdirectories and
 files located in the specified paths has an expiration, that's why they are removed in chronological order,
 oldest to newest.
 
-### How it works:
+### How it works
 When the script runs, it will check if the free disk space is >= the specified threshold (desired minimum free space).
 If the free disk space is > the specified threshold, the script does nothing and exits. If the free disk space is <= to
 the specified threshold, it will execute.
@@ -37,9 +37,10 @@ oldest to newest based on 'last modified time' until the specified threshold is 
 USE WITH EXTREME CAUTION, THIS SCRIPT IS INTENDED TO DELETE FILES AND DIRECTORIES!
 
 ### ToDo
+- [ ] Fix `ConfigLoader.handle_parsing_error()` method
 - [ ] Implement job scheduling
-- [ ] Create bare config file on first run.
-- [ ] Add support for specifying log directory.
-- [ ] Add sum of deleted files/directories.
-- [ ] Implement support for multiple disks.
-- [ ] Consider [shoutrrr](https://github.com/containrrr/shoutrrr/) support.
+- [ ] Allow option to create bare config file on first run
+- [ ] Add support for specifying log directory
+- [ ] Add sum of deleted files/directories
+- [ ] Implement support for multiple disks
+- [ ] Consider options for other notification agents

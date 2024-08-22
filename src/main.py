@@ -7,7 +7,7 @@ import toml
 
 from src.logger import setup_logging
 from src import config_path
-from notify import send_notification
+from src.notify import send_notification
 from src.disk_analyzer import DiskAnalyzer
 
 

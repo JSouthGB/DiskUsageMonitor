@@ -8,7 +8,7 @@ set -e
 CONTAINER_NAME="dum"
 IMAGE_NAME="${CONTAINER_NAME}_image"
 BUILD_CONTEXT="."
-MAIN_SCRIPT="dum.py"
+MAIN_SCRIPT="src/main.py"
 OUTPUT_DIR="$(pwd)/${CONTAINER_NAME}"
 VENV_PATH="/app/venv/bin/pyinstaller"
 PYINSTALLER_OPTIONS="--onefile"
